@@ -1,0 +1,3 @@
+Code to calculate numerical derivative of an arbitrary array on a non-uniform
+grid -- something I've never found a method for in numpy/scipy (though maybe 
+it exists).  Still an interesting exercise.
