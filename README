@@ -1,3 +1,13 @@
 Code to calculate numerical derivative of an arbitrary array on a non-uniform
 grid -- something I've never found a method for in numpy/scipy (though maybe 
-it exists).  Still an interesting exercise.
+it exists).  From what I've seen, the common methods currently are:
+
+(1) numpy.diff -- right-sided single difference of an arbitrary array, on a 
+uniform grid
+(2) numpy.gradient -- two-sided single difference of an arbitrary array, on a 
+uniform grid
+(3) scipy.misc.derivative -- two-sided difference of a defined function evaluated 
+on an arbitrary grid
+
+This method combines the arbitrary grid of (3) with the arbitrary array input in 
+(1) and (2).  Interesting exercise.
