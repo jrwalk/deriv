@@ -1,19 +1,20 @@
 """
-Compute numerical derivatives on a non-uniform (but monotonic) grid,
+Compute numerical derivatives on a non-uniform (but strictly increasing) grid,
 using quadratic Lagrangian interpolation to generate the difference matrix.
 """
 import numpy as np
 from scipy.sparse import csr_matrix
 
 def differenceMatrix(x):
-    """Generates the difference matrix for a non-uniform (but monotonic) abscissa.
-    We use a two-sided finite difference for the interior points, with one-sided
-    differences for the boundary.  Interior point coefficients are calculated by the 
-    using the derivatives of the 2nd-order Lagrange polynomials for the approximation.
+    """Generates the difference matrix for a non-uniform (but strictly 
+    increasing) abscissa.  We use a two-sided finite difference for the 
+    interior points, with one-sided differences for the boundary.  Interior 
+    point coefficients are calculated using the derivatives of the 2nd-order 
+    Lagrange polynomials for the approximation.
 
     ARGS:
         x: array.
-            monotonic, non-uniform 1D grid.  Must contain at least 2 elements.
+            strictly increasing 1D grid.  Must contain at least 2 elements.
     """
     n = len(x)
     h = x[1:]-x[:n-1]   # length n-1 array of grid spacings
@@ -44,8 +45,20 @@ def differenceMatrix(x):
     D = csr_matrix((val,(row,col)),shape=(n,n))
     return D
 
+def strictlyIncreasing(x):
+    """Checks that an input array is strictly increasing.
+
+    ARGS:
+        x: array-like.
+            Numerical array.
+    """
+    isIncreasing = True
+    for x1,x2 in zip(x,x[1:])
+        isIncreasing = isIncreasing and x1<x2
+    return isIncreasing
+
 def deriv(*args):
-    """Calculates numerical derivative for monotonic, non-uniform grid,
+    """Calculates numerical derivative for strictly increasing, non-uniform grid,
     using quadrating Lagrangian interpolation to generate the difference matrix.
 
     ARGS:
@@ -63,8 +76,10 @@ def deriv(*args):
         y = args[1]
         if len(x) != len(y):
             raise ValueError("Input arrays must be of equal size.")
-    if len(x) < 2:
-        raise ValueError("Input array(s) must contain at least 2 elements")
+        if len(x) < 2:
+            raise ValueError("Input array(s) must contain at least 2 elements")
+        if not isIncreasing(x):
+            raise ValueError("Input grid must be strictly increasing")
 
     # condition inputs
     try:
