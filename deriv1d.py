@@ -78,7 +78,7 @@ def deriv(*args):
             raise ValueError("Input arrays must be of equal size.")
         if len(x) < 2:
             raise ValueError("Input array(s) must contain at least 2 elements")
-        if not isIncreasing(x):
+        if not strictlyIncreasing(x):
             raise ValueError("Input grid must be strictly increasing")
 
     # condition inputs
