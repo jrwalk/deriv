@@ -53,7 +53,7 @@ def strictlyIncreasing(x):
             Numerical array.
     """
     isIncreasing = True
-    for x1,x2 in zip(x,x[1:])
+    for x1,x2 in zip(x,x[1:]):
         isIncreasing = isIncreasing and x1<x2
     return isIncreasing
 
